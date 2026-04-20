@@ -1,0 +1,21 @@
+# Salesforce CLI / SFDX local tooling and cache
+.sfdx/
+.sf/
+
+# Salesforce scratch org auth files
+.sfdx/orgs/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code / Cursor
+.vscode/
+*.code-workspace
+
+# Environment / secrets
+.env
+.env.*
