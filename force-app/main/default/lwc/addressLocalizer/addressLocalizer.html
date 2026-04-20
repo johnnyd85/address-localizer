@@ -1,0 +1,109 @@
+<template>
+    <lightning-card title="Address Localizer" icon-name="standard:address">
+
+        <div class="slds-p-around_medium">
+
+            <!-- Intro text -->
+            <p class="slds-text-body_regular slds-m-bottom_medium">
+                Relocate 311 Cases to a US city. Enter a target city and
+                two-letter state abbreviation, preview how many records will be
+                updated, then click <strong>Relocate Cases</strong>. Each Case
+                will receive a unique latitude and longitude within a 5-mile
+                radius of the city centroid.
+            </p>
+
+            <!-- City / State inputs -->
+            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input
+                        label="City"
+                        value={city}
+                        placeholder="e.g. Nashville"
+                        onchange={handleCityChange}
+                        disabled={isLoading}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-input
+                        label="State"
+                        value={state}
+                        placeholder="e.g. TN"
+                        max-length="2"
+                        onchange={handleStateChange}
+                        disabled={isLoading}>
+                    </lightning-input>
+                </div>
+            </div>
+
+            <!-- Preview banner -->
+            <template if:true={previewMessage}>
+                <div class="slds-box slds-box_x-small slds-theme_shade slds-m-bottom_medium slds-text-align_center">
+                    <lightning-icon
+                        icon-name="utility:info"
+                        size="x-small"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <span>{previewMessage}</span>
+                </div>
+            </template>
+
+            <!-- Error banner -->
+            <template if:true={errorMessage}>
+                <div class="slds-box slds-box_x-small slds-theme_error slds-m-bottom_medium">
+                    <lightning-icon
+                        icon-name="utility:error"
+                        size="x-small"
+                        variant="inverse"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <span class="slds-text-color_inverse">{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Success banner -->
+            <template if:true={successMessage}>
+                <div class="slds-box slds-box_x-small slds-theme_success slds-m-bottom_medium">
+                    <lightning-icon
+                        icon-name="utility:success"
+                        size="x-small"
+                        variant="inverse"
+                        class="slds-m-right_x-small">
+                    </lightning-icon>
+                    <span class="slds-text-color_inverse">{successMessage}</span>
+                </div>
+            </template>
+
+            <!-- Spinner overlay -->
+            <template if:true={isLoading}>
+                <div class="slds-is-relative slds-m-bottom_medium" style="height:3rem;">
+                    <lightning-spinner
+                        alternative-text="Working…"
+                        size="small">
+                    </lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Action buttons -->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-button
+                        label="Preview"
+                        icon-name="utility:preview"
+                        onclick={handlePreview}
+                        disabled={isPreviewDisabled}>
+                    </lightning-button>
+                </div>
+                <div class="slds-col slds-text-align_right">
+                    <lightning-button
+                        label="Relocate Cases"
+                        variant="brand"
+                        icon-name="utility:location"
+                        onclick={handleRelocate}
+                        disabled={isRelocateDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>
